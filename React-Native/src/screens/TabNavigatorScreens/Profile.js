@@ -8,7 +8,7 @@ export class Buscador extends Component {
   render() {
     return (
       <View>
-        <Text>Buscador</Text>
+     
       </View>
     )
   }

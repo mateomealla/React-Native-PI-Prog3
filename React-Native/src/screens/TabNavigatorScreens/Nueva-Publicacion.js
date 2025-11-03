@@ -14,7 +14,7 @@ export class Usuario extends Component {
   render() {
     return (
       <View>
-        <Text>Usuario</Text>
+        
         <FormularioCreaDocs navigation={this.props.navigation} />
       </View>
     )

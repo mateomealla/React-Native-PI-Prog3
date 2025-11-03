@@ -26,7 +26,7 @@ export class Feed extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Feed</Text>
+        
         <FlatList
           data={this.state.tweetsRecuperados}
           keyExtractor={(item) => item.id.toString()}
