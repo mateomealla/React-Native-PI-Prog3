@@ -6,22 +6,22 @@ export default class FormularioCreaDocs extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tweet: "",
+      description: "",
     };
   }
 
-  componentDidMount() {
-    console.log('props forms',this.props);
-  }
-
-  crearTweet(tweet) {
-    if (tweet !== "") {
-      db.collection("tweets").add({
+  crearPost() {
+    if (this.state.description !== "") {
+      db.collection("posts").add({
         owner: auth.currentUser.email,
-        tweet: this.state.tweet,
+        description: this.state.description,
         createdAt: Date.now(),
       })
-      .then((resp) => this.props.navigation.navigate("Feed"))
+      .then(() => {
+        console.log("Post guardado correctamente");
+        this.setState({ description: "" });
+        this.props.navigation.navigate("Home");
+      })
       .catch((error) => console.log(error));
     }
   }
@@ -29,26 +29,23 @@ export default class FormularioCreaDocs extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Crea tu tweet con lo que estes pensando</Text>
+        <Text style={styles.title}>Crear nuevo post</Text>
+
         <TextInput
           style={styles.input}
           keyboardType="default"
-          placeholder="Escribe tu tweet"
-          onChangeText={(text) => this.setState({ tweet: text })}
-          value={this.state.tweet}
+          placeholder="Escribí aquí tu comentario..."
+          onChangeText={(text) => this.setState({ description: text })}
+          value={this.state.description}
         />
-        
-        <Pressable
-          style={styles.button}
-          onPress={() => this.crearTweet(this.state.tweet)}
-        >
-          <Text style={styles.buttonText}>Crear Tweet</Text>
+
+        <Pressable style={styles.button} onPress={() => this.crearPost()}>
+          <Text style={styles.buttonText}>Publicar post</Text>
         </Pressable>
       </View>
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {

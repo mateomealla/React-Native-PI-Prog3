@@ -1,6 +1,6 @@
-import { Text, View, Pressable } from 'react-native'
+import { Text, View, Pressable, StyleSheet } from 'react-native'
 import React, { Component } from 'react'
-import FormularioCreaDocs from '../../components/FormularioCreaDocs';
+import FormularioPosts from '../../components/FormularioPosts';
 
 export class Usuario extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ export class Usuario extends Component {
     return (
       <View>
         
-        <FormularioCreaDocs navigation={this.props.navigation} />
+        <FormularioPosts navigation={this.props.navigation} />
       </View>
     )
   }

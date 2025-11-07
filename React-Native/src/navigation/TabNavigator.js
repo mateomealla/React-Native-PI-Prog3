@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import Home from "../screens/TabNavigatorScreens/Home";
-import New from "../screens/TabNavigatorScreens/Nueva-Publicacion";
+import New from "../screens/TabNavigatorScreens/creacionposteo";
 import Profile from "../screens/TabNavigatorScreens/Profile";
 
 const Tab = createBottomTabNavigator();
