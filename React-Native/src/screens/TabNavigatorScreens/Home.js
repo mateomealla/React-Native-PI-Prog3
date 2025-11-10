@@ -1,9 +1,7 @@
-import { Text, View, Pressable, FlatList, StyleSheet } from "react-native";
+import { Text, View, Pressable, FlatList, StyleSheet, Image } from "react-native";
 import React, { Component } from "react";
-
 import { db } from "../../firebase/config";
 import { auth } from "../../firebase/config";
-
 import firebase from "firebase";
 
 class Feed extends Component {
@@ -19,14 +17,14 @@ class Feed extends Component {
     db.collection("posts")
       .orderBy("createdAt", "desc")
       .onSnapshot((docs) => {
-        const tweets = [];
+        const posts = [];
         docs.forEach((doc) => {
-          tweets.push({
+          posts.push({
             id: doc.id,
             data: doc.data(),
           });
         });
-        this.setState({ postsRecuperados: tweets, loading: false });
+        this.setState({ postsRecuperados: posts, loading: false });
       });
   }
 
@@ -54,7 +52,14 @@ class Feed extends Component {
     return (
       <View style={styles.container}>
         {this.state.loading ? (
-          <Text>Cargando comentarios...</Text>
+          <View style={styles.loadingContainer}>
+            <Text style={styles.loadingText}>Cargando...</Text>
+            <Image
+              style={styles.image}
+              source={require("../../../assets/cargando.gif")}
+              resizeMode="contain"
+            />
+          </View>
         ) : (
           <FlatList
             data={this.state.postsRecuperados}
@@ -64,10 +69,11 @@ class Feed extends Component {
                 <Text style={styles.comentarioText}>
                   {item.data.description}
                 </Text>
-                <Text style={styles.ownerText}>{item.data.owner}</Text>
+                <Text style={styles.ownerText}>Gmail: {item.data.owner}</Text>
                 <Text style={styles.likesText}>
                   {item.data.likes ? item.data.likes.length : 0} Me gusta
                 </Text>
+
                 <Pressable
                   onPress={() => this.likePost(item.id, item.data.likes)}
                 >
@@ -78,6 +84,7 @@ class Feed extends Component {
                       : "Me gusta"}
                   </Text>
                 </Pressable>
+
                 <Pressable
                   onPress={() =>
                     this.props.navigation.navigate("Comentario", {
@@ -97,10 +104,24 @@ class Feed extends Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingText: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  image: {
+    height: 200,
+    width: 200,
   },
   comentarioContainer: {
     marginBottom: 12,
@@ -115,6 +136,7 @@ const styles = StyleSheet.create({
   ownerText: {
     fontSize: 12,
     color: "gray",
+    marginTop: 4,
   },
   likesText: {
     fontSize: 13,
