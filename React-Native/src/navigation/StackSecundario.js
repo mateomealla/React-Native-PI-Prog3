@@ -3,7 +3,7 @@ import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import Home from "../screens/TabNavigatorScreens/Home";
-import Comentario from "../screens/TabNavigatorScreens/Comentarios";
+import Comentarios from "../screens/TabNavigatorScreens/Comentarios";
 
 import TabNavigator from "./TabNavigator";
 
@@ -19,7 +19,7 @@ export default function StackNavigator() {
       />
       <Stack.Screen
         name="Comentario"
-        component={Comentario}
+        component={Comentarios}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

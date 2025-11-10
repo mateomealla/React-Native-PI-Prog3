@@ -36,8 +36,9 @@ class Profile extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Perfil del usuario</Text>
+        <Text style={styles.email}>{auth.currentUser.username}</Text>
         <Text style={styles.email}>{auth.currentUser.email}</Text>
-
+{console.log(auth.currentUser)}
         <Text style={styles.subtitle}>Mis posteos:</Text>
 
         <FlatList

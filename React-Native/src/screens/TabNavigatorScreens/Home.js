@@ -6,12 +6,11 @@ import { auth } from "../../firebase/config";
 
 import firebase from "firebase";
 
-
 class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      comentariosRecuperados: [],
+      postsRecuperados: [],
       loading: true,
     };
   }
@@ -27,20 +26,27 @@ class Feed extends Component {
             data: doc.data(),
           });
         });
-        this.setState({ comentariosRecuperados: tweets, loading: false });
+        this.setState({ postsRecuperados: tweets, loading: false });
       });
   }
 
-  likeComentario(comentarioId, userLikes) {
-
+  likePost(postId, userLikes) {
     if (userLikes.includes(auth.currentUser.email)) {
-      db.collection("posts").doc(comentarioId).update({
-        likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email),
-      });
+      db.collection("posts")
+        .doc(postId)
+        .update({
+          likes: firebase.firestore.FieldValue.arrayRemove(
+            auth.currentUser.email
+          ),
+        });
     } else {
-      db.collection("posts").doc(comentarioId).update({
-        likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email),
-      });
+      db.collection("posts")
+        .doc(postId)
+        .update({
+          likes: firebase.firestore.FieldValue.arrayUnion(
+            auth.currentUser.email
+          ),
+        });
     }
   }
 
@@ -51,7 +57,7 @@ class Feed extends Component {
           <Text>Cargando comentarios...</Text>
         ) : (
           <FlatList
-            data={this.state.comentariosRecuperados}
+            data={this.state.postsRecuperados}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
               <View style={styles.comentarioContainer}>
@@ -63,13 +69,20 @@ class Feed extends Component {
                   {item.data.likes ? item.data.likes.length : 0} Me gusta
                 </Text>
                 <Pressable
-                  onPress={() => this.likeComentario(item.id, item.data.likes)}
+                  onPress={() => this.likePost(item.id, item.data.likes)}
                 >
-                  <Text style={styles.likeBoton}>Me gusta</Text>
+                  <Text style={styles.likeBoton}>
+                    {item.data.likes &&
+                    item.data.likes.includes(auth.currentUser.email)
+                      ? "Quitar Like"
+                      : "Me gusta"}
+                  </Text>
                 </Pressable>
                 <Pressable
                   onPress={() =>
                     this.props.navigation.navigate("Comentario", {
+                      description: item.data.description,
+                      owner: item.data.owner,
                       id: item.id,
                     })
                   }
