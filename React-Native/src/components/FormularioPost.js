@@ -17,6 +17,7 @@ export default class FormularioCreaDocs extends Component {
         description: this.state.description,
         createdAt: Date.now(),
         likes: [],
+        comentarios: [],
       })
       .then(() => {
         console.log("Post guardado correctamente");
