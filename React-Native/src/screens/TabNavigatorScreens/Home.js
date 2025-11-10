@@ -1,14 +1,17 @@
 import { Text, View, Pressable, FlatList, StyleSheet } from "react-native";
 import React, { Component } from "react";
+
 import { db } from "../../firebase/config";
-import firebase from "firebase";
 import { auth } from "../../firebase/config";
+
+import firebase from "firebase";
+
 
 class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tweetsRecuperados: [],
+      comentariosRecuperados: [],
       loading: true,
     };
   }
@@ -24,21 +27,19 @@ class Feed extends Component {
             data: doc.data(),
           });
         });
-        this.setState({ tweetsRecuperados: tweets, loading: false });
+        this.setState({ comentariosRecuperados: tweets, loading: false });
       });
   }
 
-  likeTweet(tweetId, userLikes) {
-    let userEmail = auth.currentUser.email;
-    let tweet2 = db.collection("posts").doc(tweetId);
+  likeComentario(comentarioId, userLikes) {
 
-    if (userLikes.includes(userEmail)) {
-      tweet2.update({
-        likes: firebase.firestore.FieldValue.arrayRemove(userEmail),
+    if (userLikes.includes(auth.currentUser.email)) {
+      db.collection("posts").doc(comentarioId).update({
+        likes: firebase.firestore.FieldValue.arrayRemove(auth.currentUser.email),
       });
     } else {
-      tweet2.update({
-        likes: firebase.firestore.FieldValue.arrayUnion(userEmail),
+      db.collection("posts").doc(comentarioId).update({
+        likes: firebase.firestore.FieldValue.arrayUnion(auth.currentUser.email),
       });
     }
   }
@@ -47,28 +48,32 @@ class Feed extends Component {
     return (
       <View style={styles.container}>
         {this.state.loading ? (
-          <Text>Cargando tweets...</Text>
+          <Text>Cargando comentarios...</Text>
         ) : (
           <FlatList
-            data={this.state.tweetsRecuperados}
+            data={this.state.comentariosRecuperados}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-              <View style={styles.tweetContainer}>
-                <Text style={styles.tweetText}>{item.data.description}</Text>
+              <View style={styles.comentarioContainer}>
+                <Text style={styles.comentarioText}>
+                  {item.data.description}
+                </Text>
                 <Text style={styles.ownerText}>{item.data.owner}</Text>
                 <Text style={styles.likesText}>
                   {item.data.likes ? item.data.likes.length : 0} Me gusta
                 </Text>
                 <Pressable
-                  onPress={() => this.likeTweet(item.id, item.data.likes)}>
+                  onPress={() => this.likeComentario(item.id, item.data.likes)}
+                >
                   <Text style={styles.likeBoton}>Me gusta</Text>
                 </Pressable>
                 <Pressable
                   onPress={() =>
-                    this.props.navigation.navigate("Comentarios", {
+                    this.props.navigation.navigate("Comentario", {
                       id: item.id,
                     })
-                  }>
+                  }
+                >
                   <Text style={styles.comentarioBoton}>Comentar</Text>
                 </Pressable>
               </View>
@@ -84,14 +89,14 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
   },
-  tweetContainer: {
+  comentarioContainer: {
     marginBottom: 12,
     padding: 12,
     borderWidth: 1,
     borderColor: "lightgray",
     borderRadius: 8,
   },
-  tweetText: {
+  comentarioText: {
     fontSize: 16,
   },
   ownerText: {

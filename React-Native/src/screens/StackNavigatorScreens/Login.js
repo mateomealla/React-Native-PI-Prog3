@@ -11,6 +11,14 @@ export class Login extends Component {
       error_message: "",
     };
   }
+  componentDidMount() {
+    auth.onAuthStateChanged((user) => {
+      if (user !== null) {
+        this.props.navigation.navigate('TabNavigator');
+      }
+    });
+  }
+
   submit(email, password) {
     console.log("Usuario Logeado:", { email, password });
   
