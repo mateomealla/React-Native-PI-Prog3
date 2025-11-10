@@ -2,7 +2,7 @@ import { Text, View, Pressable, FlatList, StyleSheet } from "react-native";
 import React, { Component } from "react";
 import { db } from "../../firebase/config";
 
-export class Feed extends Component {
+class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -26,7 +26,6 @@ export class Feed extends Component {
   render() {
     return (
       <View style={styles.container}>
-        
         <FlatList
           data={this.state.tweetsRecuperados}
           keyExtractor={(item) => item.id.toString()}

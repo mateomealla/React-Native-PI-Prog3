@@ -1,8 +1,8 @@
 import { Text, View, Pressable, StyleSheet } from 'react-native'
 import React, { Component } from 'react'
-import FormularioPosts from '../../components/FormularioPosts';
+import FormularioPosts from '../../components/FormularioPost';
 
-export class Usuario extends Component {
+class Usuario extends Component {
     constructor(props) {
     super(props);
   }
