@@ -61,7 +61,7 @@ class Profile extends Component {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View style={styles.card}>
-              <Text>{item.data.description}</Text>
+              <Text style={styles.postText}>{item.data.description}</Text>
             </View>
           )}
         />
@@ -74,58 +74,106 @@ class Profile extends Component {
   }
 }
 
+const COLORS = {
+  primary: "#1679FF",
+  bg: "#F5F7FB",
+  surface: "#FFFFFF",
+  outline: "#E5ECF6",
+  text: "#0F172A",
+  textMuted: "#6B7280",
+};
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: COLORS.bg,
   },
   title: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginBottom: 10,
+    fontWeight: '800',
+    fontSize: 24,
+    marginBottom: 12,
+    color: COLORS.text,
+    letterSpacing: 0.2,
   },
   infoContainer: {
-    marginBottom: 15,
+    marginBottom: 16,
+    backgroundColor: COLORS.surface,
+    borderWidth: 1,
+    borderColor: COLORS.outline,
+    borderRadius: 16,
+    padding: 16,
+    shadowColor: "#1A56DB",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 3,
   },
   usernameLabel: {
-    fontWeight: 'bold',
-    marginBottom: 5,
-    color: '#333',
+    fontWeight: '700',
+    marginBottom: 6,
+    color: COLORS.textMuted,
+    fontSize: 14,
   },
   usernameText: {
-    fontWeight: 'normal',
-    color: '#000',
+    fontWeight: '800',
+    color: COLORS.text,
+    fontSize: 16,
   },
   emailLabel: {
-    fontWeight: 'bold',
-    color: '#333',
+    fontWeight: '700',
+    color: COLORS.textMuted,
+    fontSize: 14,
   },
   emailText: {
-    fontWeight: 'normal',
-    color: '#555',
+    fontWeight: '600',
+    color: COLORS.text,
+    fontSize: 15,
   },
   subtitle: {
-    fontWeight: 'bold',
-    marginTop: 10,
-    marginBottom: 5,
+    fontWeight: '800',
+    marginTop: 8,
+    marginBottom: 8,
+    fontSize: 18,
+    color: COLORS.text,
   },
   card: {
     borderWidth: 1,
-    borderColor: 'gray',
-    marginBottom: 8,
-    padding: 8,
-    borderRadius: 5,
+    borderColor: COLORS.outline,
+    marginBottom: 10,
+    padding: 16,
+    borderRadius: 16,
+    backgroundColor: COLORS.surface,
+    shadowColor: "#1A56DB",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.08,
+    shadowRadius: 12,
+    elevation: 3,
+  },
+  postText: {
+    color: COLORS.text,
+    fontSize: 15,
+    lineHeight: 21,
   },
   button: {
-    backgroundColor: 'red',
-    padding: 12,
+    backgroundColor: COLORS.primary,
+    paddingVertical: 14,
     alignItems: 'center',
     marginTop: 20,
-    borderRadius: 5,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: COLORS.outline,
+    shadowColor: "#1A56DB",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    elevation: 2,
   },
   buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: COLORS.surface,
+    fontWeight: '700',
+    fontSize: 16,
+    letterSpacing: 0.2,
   },
 });
 

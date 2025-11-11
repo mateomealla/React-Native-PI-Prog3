@@ -9,7 +9,7 @@ export class Register extends Component {
       username: "",
       email: "",
       password: "",
-      error_message: "",
+      error_message: null,
     };
   }
   submit(email, password, username) {
@@ -29,10 +29,8 @@ export class Register extends Component {
             username: username,
           })
           .then(() => {
-            console.log("Usuario registrado con éxito");
             this.props.navigation.navigate("Login");
           })
-          
           .catch((error) => console.log(error));
       })
       .catch((error) => this.setState({ error_message: error.message }));
@@ -40,8 +38,8 @@ export class Register extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Registra tu usuario</Text>
+      <View style={styles.screen}>
+        <Text style={styles.title}>Registra tu usuario</Text>
         <Text style={styles.error_message}>{this.state.error_message}</Text>
         <View style={styles.container}>
           <TextInput
@@ -89,37 +87,95 @@ export class Register extends Component {
   }
 }
 
+const COLORS = {
+  primary: "#1679FF",
+  primaryDark: "#0E63D6",
+  bg: "#F5F7FB",
+  surface: "#FFFFFF",
+  outline: "#E5ECF6",
+  text: "#0F172A",
+  textMuted: "#6B7280",
+  error: "#EF4444",
+};
+
 const styles = StyleSheet.create({
-  container: {
+  screen: {
     flex: 1,
+    backgroundColor: COLORS.bg,
+    paddingTop: 12,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "800",
+    color: COLORS.text,
+    marginHorizontal: 24,
+    marginBottom: 12,
+    letterSpacing: 0.2,
+  },
+  container: {
     justifyContent: "center",
-    padding: 16,
+    padding: 24,
   },
   error_message: {
-    color: "red",
-    marginBottom: 12,
+    color: COLORS.error,
+    marginHorizontal: 24,
+    marginBottom: 8,
+    backgroundColor: "#FEE2E2",
+    borderRadius: 12,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    textAlign: "center",
+    alignSelf: "stretch",
   },
   input: {
-    height: 40,
-    borderColor: "gray",
+    height: 52,
+    backgroundColor: COLORS.surface,
+    borderColor: COLORS.outline,
     borderWidth: 1,
+    borderRadius: 14,
+    paddingHorizontal: 14,
     marginBottom: 12,
-    paddingHorizontal: 8,
+    placeholderTextColor: COLORS.textMuted,
+    color: COLORS.text,
+    shadowColor: "#1A56DB",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    elevation: 2,
   },
   button: {
-    backgroundColor: "blue",
-    padding: 12,
+    backgroundColor: COLORS.primary,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
     alignItems: "center",
-    marginBottom: 10,
+    borderRadius: 14,
+    marginHorizontal: 16,
+    marginTop: 8,
+    shadowColor: COLORS.primary,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.25,
+    shadowRadius: 16,
+    elevation: 4,
   },
   button2: {
-    backgroundColor: "gray",
-    padding: 12,
+    backgroundColor: "#6DA8FF",
+    paddingVertical: 14,
+    paddingHorizontal: 16,
     alignItems: "center",
+    borderRadius: 14,
+    marginHorizontal: 16,
+    marginTop: 10,
+    shadowColor: "#4F7DF7",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 3,
   },
   buttonText: {
-    color: "white",
-    fontWeight: "bold",
+    color: "#FFFFFF",
+    fontWeight: "700",
+    fontSize: 16,
+    letterSpacing: 0.2,
   },
 });
 
